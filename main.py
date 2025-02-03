@@ -81,14 +81,14 @@ btn_update = tk.Button(window, text="UPD", command=update_selected)
 
 #PACKS
 
-label_name.pack()
-input_name.pack(pady=(0,20))
-label_phone.pack()
-input_phone.pack(pady=(0,20))
-btn_add.pack(pady=5)
-btn_remove.pack()
-btn_update.pack()
-tree_contacts.pack(pady=20)
+label_name.grid(row=0, column=0, pady=5)
+input_name.grid(row=0, column=1, pady=5)
+label_phone.grid(row=0, column=2, pady=5)
+input_phone.grid(row=0, column=3, pady=5)
+btn_add.grid(row=1, column=0, pady=5)
+btn_remove.grid(row=1, column=1, pady=5)
+btn_update.grid(row=1, column=2, pady=5)
+tree_contacts.grid(row=2, column=0, columnspan=4)
 
 tree_contacts.heading("id", text="ID")
 tree_contacts.heading("name", text="NAME")
