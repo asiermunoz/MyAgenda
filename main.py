@@ -13,9 +13,7 @@ label_phone = tk.Label(window, text = "Phone: ")
 
 tree_contacts = ttk.Treeview(window, columns=("id", "name", "phone"), show="headings")
 
-contacts = [
-
-]
+contacts = []
 
 def add():
     name = input_name.get()
@@ -39,8 +37,46 @@ def update():
     for contact in contacts:
         tree_contacts.insert("", "end", values=(contact[0], contact[1], contact[2]))
 
+def remove_selected():
+    selected = tree_contacts.selection()
+    if selected:
+        contacto = tree_contacts.item(selected, "values")
+        selected_contact = list(contacto)
+        selected_contact = [int(selected_contact[0]), selected_contact[1], selected_contact[2]]
+        
+        if selected_contact in contacts:
+            contacts.remove(selected_contact)
+            tree_contacts.delete(selected)
+        else:
+            print("Contact not found in the list")
 
-btn_add = tk.Button(window, text = "add", command=add)
+def update_selected():
+    selected = tree_contacts.selection()
+    if selected:
+        contacto = tree_contacts.item(selected, "values")
+        selected_contact = list(contacto)
+        selected_contact = [int(selected_contact[0]), selected_contact[1], selected_contact[2]]
+        
+        # Capture new values from input fields (assuming you have entry widgets for name and phone)
+        new_name = input_name.get()
+        new_phone = input_phone.get()
+        
+        # Find the index of the selected contact in the contacts list
+        for idx, contact in enumerate(contacts):
+            if contact[0] == selected_contact[0]:
+                # Update the contact with new values
+                contacts[idx] = [selected_contact[0], new_name, new_phone]
+                break
+        
+        # Update the tree view
+        update()
+
+        
+
+btn_add = tk.Button(window, text = "ADD", command=add)
+
+btn_remove = tk.Button(window, text="DEL", command=remove_selected)
+btn_update = tk.Button(window, text="UPD", command=update_selected)
 
 
 #PACKS
@@ -49,7 +85,9 @@ label_name.pack()
 input_name.pack(pady=(0,20))
 label_phone.pack()
 input_phone.pack(pady=(0,20))
-btn_add.pack()
+btn_add.pack(pady=5)
+btn_remove.pack()
+btn_update.pack()
 tree_contacts.pack(pady=20)
 
 tree_contacts.heading("id", text="ID")
